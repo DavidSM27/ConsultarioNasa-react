@@ -1,7 +1,6 @@
-# NASA - Consultor de imagenes (React)
+# NASA - Consultor de imagenes
 
 Aplicacion en React 19 que busca imagenes en el archivo publico de la NASA
-([NASA Image and Video Library](https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf)).
 Es la reconstruccion en React de la app de la mision anterior async-oddysey
 
 ## Tecnologia

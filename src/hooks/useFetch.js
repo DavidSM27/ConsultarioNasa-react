@@ -13,7 +13,6 @@ export function useFetch(url, { transformar, cacheKey }){
         if(!url) return;
 
         // Si la url cambia mientras esperamos, esta peticion queda obsoleta
-        // y su resultado se ignora (asi una respuesta lenta no pisa a una mas nueva)
         let cancelado = false;
 
         async function cargar(){

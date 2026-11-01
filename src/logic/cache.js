@@ -8,7 +8,7 @@ export function leerCache(clave){
         if(!guardado) return null;
         if(Date.now() - guardado.guardadoEn > CADUCIDAD) return null; // si ha pasado mas de 10 min desde que se guardo, se considera caducado
         return guardado.datos;
-    }catch(error){
+    }catch{
         return null;
     }
 }

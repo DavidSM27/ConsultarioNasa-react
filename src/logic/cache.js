@@ -6,7 +6,7 @@ export function leerCache(clave){
     try{
         const guardado = JSON.parse(localStorage.getItem(clave)); // es null si la clave no existe
         if(!guardado) return null;
-        if(Date.now() - guardado.guardoEn > CADUCIDAD) return null; // si ha pasado mas de 10 min desde que se guardo, se considera caducado
+        if(Date.now() - guardado.guardadoEn > CADUCIDAD) return null; // si ha pasado mas de 10 min desde que se guardo, se considera caducado
         return guardado.datos;
     }catch(error){
         return null;

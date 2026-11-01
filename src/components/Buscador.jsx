@@ -38,8 +38,9 @@ export function Buscador({ consulta, onBuscar}){
                 {PRESETS.map(({q, etiqueta}) => (
                     <button
                         key={q}
-                    type="button"
-                    onClick={() => elegirPreset(q)}
+                        type="button"
+                        className={consulta === q ? "activo" : ""}
+                        onClick={() => elegirPreset(q)}
                     >
                         {etiqueta}
                     </button>

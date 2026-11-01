@@ -20,7 +20,7 @@ export default function App(){
     cacheKey: claveBusqueda(consulta),
   });
 
-  const imagenes = datos ?? [];
+  const imagenes = (consulta && datos) || [];
   const conteo = contarPorDecada(imagenes);
   const visibles = filtrarPorDecada(imagenes, decada).slice(0, MAX_TARJETAS);
 

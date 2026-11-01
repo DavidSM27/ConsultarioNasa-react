@@ -6,15 +6,15 @@ export function FiltroDecadas({ conteo, total, activa, onElegir}){
     if(decadas.length === 0) return null;
 
     return (
-        <div className="decadas" role="group" aria-label="Filtrar por decada">
-            <button type="button" aria-pressed={activa === null} onClick={() => onElegir(null)}>
+        <div className="decadas">
+            <button type="button" className={activa === null ? "activo" : ""} onClick={() => onElegir(null)}>
                 Todas ({total})
             </button>
             {decadas.map(([decada, n]) => (
                 <button 
                     key={decada}
                     type="button"
-                    aria-pressed={activa === decada}
+                    className={activa === decada ? "activo" : ""}
                     onClick={() => onElegir(decada)}
                 >
                     {decada} ({n})

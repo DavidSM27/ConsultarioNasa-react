@@ -15,7 +15,7 @@ export function normalizar(items){
         }))
         .filter((img) => img.id && img.titulo && img.imagen);
     
-    return [...new Map(imagenes.map((img) => [img.id, img])).values()]; // descartamos todo aquello que no se puede pintar
+    return imagenes.filter((img, i) => imagenes.findIndex((otra) => otra.id === img.id) === i); // quitamos los repetidos
 }
 
 export function normalizarRespuesta(json){

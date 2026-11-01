@@ -7,7 +7,7 @@ export function Tarjeta({titulo, anio, imagen}) {
 
     return (
         <figure>
-            <img src={imagen} alt={titulo} loding="lazy" onError={() => setFallida(true)} />
+            <img src={imagen} alt={titulo} loading="lazy" onError={() => setFallida(true)} />
             <figcaption>{anio ? `${titulo} (${anio})` : titulo}</figcaption>
         </figure>
     )

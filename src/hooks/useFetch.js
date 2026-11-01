@@ -1,53 +1,58 @@
 import { useEffect, useState } from "react";
 import { leerCache, guardarCache } from "../logic/cache.js";
 
-const IDENTIDAD = (valor) => valor;
-
-export function useFetch(url, { transformar = IDENTIDAD, cacheKey = null } = {}){
-    const [intento, setIntento] = useState(0);
-    const [resultado, setResultado] = useState({ peticion: null, datos: null, error: null});
-
-    const peticion = url === null ? null : `${url}#${intento}`;
+// Hook personalizado: pide una url, y devuelve los datos, si esta cargando y si hubo error.
+// Si se le pasa cacheKey, guarda y lee el resultado de localStorage (cache de 10 min).
+export function useFetch(url, { transformar, cacheKey }){
+    const [datos, setDatos] = useState(null);
+    const [cargando, setCargando] = useState(false);
+    const [error, setError] = useState(null);
+    const [intento, setIntento] = useState(0); // al subirlo, el efecto se vuelve a ejecutar (reintentar)
 
     useEffect(() => {
-    if (peticion === null) return;
+        if(!url) return;
 
-    const controlador = new AbortController();
+        // Si la url cambia mientras esperamos, esta peticion queda obsoleta
+        // y su resultado se ignora (asi una respuesta lenta no pisa a una mas nueva)
+        let cancelado = false;
 
-    async function cargar() {
-      try {
-        const cacheado = cacheKey ? leerCache(cacheKey) : null;
-        if (cacheado) {
-          setResultado({ peticion, datos: cacheado, error: null });
-          return;
+        async function cargar(){
+            setCargando(true);
+            setError(null);
+            setDatos(null);
+
+            try{
+                let resultado = cacheKey ? leerCache(cacheKey) : null;
+
+                if(!resultado){
+                    const respuesta = await fetch(url);
+                    if(!respuesta.ok){
+                        throw new Error(`Error en la llamada a la API: ${respuesta.status}`);
+                    }
+                    resultado = transformar(await respuesta.json());
+                    if(cacheKey) guardarCache(cacheKey, resultado);
+                }
+
+                if(!cancelado) setDatos(resultado);
+            }catch(error){
+                if(!cancelado) setError(error);
+            }finally{
+                if(!cancelado) setCargando(false);
+            }
         }
 
-        const respuesta = await fetch(url, { signal: controlador.signal });
-        if (!respuesta.ok) {
-          throw new Error(`Error en la llamada a la API: ${respuesta.status}`);
-        }
+        cargar();
 
-        const datos = transformar(await respuesta.json());
-        if (cacheKey) guardarCache(cacheKey, datos);
-        setResultado({ peticion, datos, error: null });
-      } catch (error) {
-        if (error.name === "AbortError") return; // peticion obsoleta: se ignora
-        setResultado({ peticion, datos: null, error });
-      }
-    }
+        // Limpieza: se ejecuta antes de la siguiente peticion o al desmontar
+        return () => {
+            cancelado = true;
+        };
+    }, [url, cacheKey, transformar, intento]);
 
-    cargar();
-    return () => controlador.abort();
-  }, [peticion, url, transformar, cacheKey]);
-
-  const esActual = resultado.peticion === peticion;
-
-  return {
-    datos: esActual ? resultado.datos : null,
-    error: esActual ? resultado.error : null,
-    cargando: peticion !== null && !esActual,
-    reintentar: () => setIntento((n) => n + 1),
-  };
+    return {
+        datos,
+        cargando,
+        error,
+        reintentar: () => setIntento((n) => n + 1),
+    };
 }
-
-

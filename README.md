@@ -30,7 +30,7 @@ buscador vive dentro de `Buscador`, porque ningun otro componente lo necesita.
 
 El filtro de decada se reinicia en la funcion `buscar` .
 
-**Listas y condicionales.** Cada tarjeta usa `key={img.id}`; `normalizar`
+**Listas.** Cada tarjeta usa `key={img.id}`; `normalizar`
 descarta los ids repetidos. `Estado` elige el mensaje con `if / else if`.
 
 **Hook personalizado.** `useFetch(url, { transformar, cacheKey })` hace la peticion, comprueba

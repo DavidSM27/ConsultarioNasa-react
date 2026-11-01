@@ -25,7 +25,7 @@ render a partir de ellos, sin guardarlos en otro estado. El texto que se esta es
 buscador vive dentro de `Buscador`, porque ningun otro componente lo necesita.
 
 **Efectos.** Hay dos `useEffect`:
-- En `useFetch`: pide los datos cuando cambia la url. Tiene una funcion de limpieza que pone a  la
+- En `useFetch`: pide los datos cuando cambia la url. Tiene una funcion que limpia que pone a  la
   peticion como obsoleta, para que una respuesta lenta de una busqueda anterior no sustituya a la nueva.
 - En `App`: cambia el titulo de la pestana segun la busqueda.
 
@@ -40,7 +40,7 @@ descarta los ids repetidos. `Estado` elige el mensaje con `if / else if`.
 
 ## Declaracion de uso de IA
 
-- **Herramienta:** Claude (Anthropic).
+- **Herramienta:** Claude.
 - **Para que se uso:** Se ha hecho uso de la ia para darme una vision general del proyecto y para estar de supervisor de lo que iba haciendo con mi codigo, mientras iba escribiendo, iba compartiendo con claude los avanzes que iba realizando y me daba algunas correciones o me verificaba el codigo siempre como ayudante y nunca dejando que el escribiera el codigo tal cual
 - **Que es de la mision anterior:** la separacion en capas, `normalizar`, `contarPorDecada`, la cache de
   10 minutos y los estilos.

@@ -1,0 +1,80 @@
+:root {
+  --fondo: #0b1d33;
+  --panel: #12304f;
+  --texto: #eef3f8;
+  --suave: #9db4cc;
+  --acento: #ffb347;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+header, main, footer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+h1 { margin: 0; font-size: 2.2rem; }
+
+button {
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--acento);
+  color: #222;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+button:focus-visible, input:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+/* Buscador */
+.buscador { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin-top: 0.75rem; }
+.buscador label { flex-basis: 100%; color: var(--suave); }
+.buscador input {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--suave);
+  font: inherit;
+}
+
+/* Presets y chips de decada: botones secundarios que se pintan de acento al estar activos */
+.presets, .decadas { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.presets { margin-top: 0.75rem; }
+.presets button, .decadas button { background: var(--panel); color: var(--texto); }
+.presets button[aria-pressed="true"],
+.decadas button[aria-pressed="true"] { background: var(--acento); color: #222; }
+
+.estado { min-height: 1.5rem; margin: 0 0 0.75rem; }
+.estado button { margin-left: 0.25rem; }
+.decadas { margin-bottom: 1rem; }
+
+/* Galeria */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+figure { margin: 0; background: var(--panel); border-radius: 8px; overflow: hidden; }
+figure img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 0.3s; }
+figure:hover img { transform: scale(1.08); }
+figcaption { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
+
+footer { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: space-between; align-items: center; color: var(--suave); }
+footer button { padding: 0; background: transparent; color: var(--suave); text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  figure img { transition: none; }
+  figure:hover img { transform: none; }
+}
